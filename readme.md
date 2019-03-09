@@ -7,7 +7,7 @@ This is a MicroPython adaptation inspired by this Raspberry implementation: http
 ## Caveats
 
 ### UART
-I used it with an ESP32. Tried with ESP8266 but since it has only one (full)UART that is being used by the REPL (and WebREPL) it was unusable. ESP32 has an unused UART (UART 2) that can be used to communicate with other devices. So you need a chip that has a free UART (like ESP32).
+ESP32 use UART(2), ESP8266 use UART(0)
 
 ### Voltage
 The documentation claims that the device needs to run on 5V as it's internal fan is driven by 5V where the data pins output 3.3V for high.

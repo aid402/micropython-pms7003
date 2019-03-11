@@ -21,7 +21,14 @@ I tested running on 3.3V on six different PMS7003 devices.
     from pms7003 import PMS7003
 
     pms = PMS7003()
+    pms.setmode(pms.passive)
     pms_data = pms.read()
+    
+    pms.setmode(pms.active)
+    pms_data = pms.read()
+    
+    pms.sleep()
+    pms.wakeup()
 
 `PMS7003.read()` will return a dictionary with *the oldest* read that is in the buffer. It means that your reads will always be a bit off in time, depending on the UART's buffer size and the frequency of your reads.
 It's generaly a good idea not to read faster than the device writes.

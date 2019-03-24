@@ -58,8 +58,9 @@ class PMS7003:
     def read(self):
         if self.mode == self.passive:
             self.write(self.cmdReadData)
-        while not self.uart.any():
-            pass
+        loop=0
+        while not self.uart.any() or loop<100:
+            loop+=1
         if self.uart.read(1) != b'B':
             return False
         if self.uart.read(1) != b'M':

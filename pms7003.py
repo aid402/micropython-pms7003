@@ -31,8 +31,8 @@ class PMS7003:
 
     def __init__(self,uart=0):
         self.uart = UART(uart)
-        self.uart.init(9600, bits=8, parity=None, stop=1, rxbuf=32)
-        self.setmode(self.passive)
+        self.uart.init(9600, bits=8, parity=None, stop=1, rxbuf=64)
+        self.setmode(self.active)
 
     def setmode(self,mode):
         self.mode = mode
@@ -58,15 +58,13 @@ class PMS7003:
     def read(self):
         if self.mode == self.passive:
             self.write(self.cmdReadData)
-        loop=0
-        while not self.uart.any() or loop<100:
-            loop+=1
-        if self.uart.read(1) != b'B':
-            return False
+        while self.uart.read(1) != b'B':
+            pass
         if self.uart.read(1) != b'M':
             return False
 
         read_buffer = self.uart.read(30)
+        self.uart.read()
         if len(read_buffer) < 30:
             return False
 
